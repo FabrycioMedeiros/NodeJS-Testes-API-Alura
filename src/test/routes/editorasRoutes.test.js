@@ -1,4 +1,6 @@
-import { afterEach, beforeEach } from '@jest/globals';
+import {
+  describe, expect, it, jest,
+} from '@jest/globals';
 import request from 'supertest';
 import app from '../../app.js';
 
@@ -38,13 +40,11 @@ describe('POST em /editoras', () => {
 
     idResposta = resposta.body.content.id;
   });
-});
-
-describe('DELETE em /editoras/id', () => {
-  it('Deletar o recurso adicionado', async () => {
+  it('Deve nao adicionar nada ao passar o body vazio', async () => {
     await request(app)
-      .delete(`/editoras/${idResposta}`)
-      .expect(200);
+      .post('/editoras')
+      .send({})
+      .expect(400);
   });
 });
 
@@ -53,5 +53,30 @@ describe('GET em /editoras/id', () => {
     await request(app)
       .get(`/editoras/${idResposta}`)
       .expect(200);
+  });
+});
+
+describe('PUT em /editoras/id', () => {
+  test.each([
+    ['nome', { nome: 'Casa do Codigo' }],
+    ['cidade', { cidade: 'SP' }],
+    ['email', { email: 'cdc@cdc.com' }],
+  ])('Deve alterar o campo %s', async (chave, param) => {
+    await request(app)
+      .put(`/editoras/${idResposta}`)
+      .send(param)
+      .expect(204);
+  });
+});
+
+describe('DELETE em /editoras/id', () => {
+  it('Deletar o recurso adicionado', async () => {
+    const requisicao = { request };
+    const spy = jest.spyOn(requisicao, 'request');
+    await requisicao.request(app)
+      .delete(`/editoras/${idResposta}`)
+      .expect(200);
+
+    expect(spy).toHaveBeenCalled();
   });
 });
