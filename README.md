@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # API Livraria
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN)
@@ -211,3 +212,6 @@ A API expõe os seguintes *endpoints* a partir da *base URL* `localhost:3000`:
 * Autenticação
 * Tratamento de erros
 * Validações
+=======
+# NodeJS-Testes-API-Alura
+>>>>>>> f66c0ef90f2b0c678416e3fd814ba7930e3b5bc6
